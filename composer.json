@@ -26,6 +26,7 @@
     },
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true,
+      "infection/extension-installer": false,
       "laminas/laminas-component-installer": true
     }
   },
@@ -51,6 +52,7 @@
     "mezzio/mezzio-fastroute": "^3.14.0",
     "mezzio/mezzio-helpers": "^5.20.0",
     "phpunit/phpunit": "^11.5.42",
+    "roave/infection-static-analysis-plugin": "^1.43.0",
     "psalm/plugin-phpunit": "^0.19.5",
     "vimeo/psalm": "^6.15.1"
   },
