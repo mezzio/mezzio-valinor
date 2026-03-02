@@ -1,0 +1,19 @@
+docs_dir: docs/book
+site_dir: docs/html
+nav:
+    - Home: index.md
+    - v1:
+        - Introduction: v1/intro.md
+        - Installation: v1/installation.md
+        - Usage:
+            - "Mapping Requests": v1/mapping-requests.md
+site_name: mezzio-valinor
+site_description: 'Valinor request parsing middleware for PSR-7 applications.'
+repo_url: 'https://github.com/mezzio/mezzio-valinor'
+extra:
+    project: Mezzio
+    installation:
+        config_provider_class: 'Mezzio\Valinor\ConfigProvider'
+    current_version: v1
+    versions:
+      - v1

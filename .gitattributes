@@ -1,0 +1,13 @@
+/.gitattributes export-ignore
+/.github/ export-ignore
+/.gitignore export-ignore
+/docs/ export-ignore
+/mkdocs.yml export-ignore
+/phpcs.xml export-ignore
+/psalm.xml export-ignore
+/phpunit.xml.dist export-ignore
+/test/ export-ignore
+/.psr-container.php.stub
+/renovate.json
+/.laminas-ci.json
+/TODO.md
