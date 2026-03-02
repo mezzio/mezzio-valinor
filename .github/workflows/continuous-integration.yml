@@ -3,9 +3,31 @@ name: "Continuous Integration"
 on:
   pull_request:
   push:
-    branches:
-    tags:
 
 jobs:
-  ci:
-    uses: laminas/workflow-continuous-integration/.github/workflows/continuous-integration.yml@1.43.0
+  matrix:
+    name: Generate job matrix
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - name: Gather CI configuration
+        id: matrix
+        uses: laminas/laminas-ci-matrix-action@1.32.0
+
+  qa:
+    name: QA Checks
+    needs: [ matrix ]
+    runs-on: ${{ matrix.operatingSystem }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.matrix.outputs.matrix) }}
+    steps:
+      - name: ${{ matrix.name }}
+        uses: laminas/laminas-continuous-integration-action@1.43.0
+        env:
+          "GITHUB_TOKEN": ${{ secrets.GITHUB_TOKEN }}
+          "INFECTION_DASHBOARD_API_KEY": ${{ secrets.INFECTION_DASHBOARD_API_KEY }}
+          "STRYKER_DASHBOARD_API_KEY": ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+        with:
+          job: ${{ matrix.job }}
