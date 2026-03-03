@@ -51,12 +51,12 @@ final class MezzioSkeletonIntegrationTest extends TestCase
 
         self::assertJsonStringEqualsJsonString(
             <<<'JSON'
-{
-  "reached_endpoint": true,
-  "sku": "ABC123",
-  "quantity": 999
-}
-JSON,
+            {
+              "reached_endpoint": true,
+              "sku": "ABC123",
+              "quantity": 999
+            }
+            JSON,
             $app
                 ->handle($request)
                 ->getBody()
