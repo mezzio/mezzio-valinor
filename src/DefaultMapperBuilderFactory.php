@@ -44,7 +44,7 @@ final class DefaultMapperBuilderFactory
         $body = $request->getParsedBody();
 
         if (! is_array($body)) {
-            // @TODO do we want mapping to fail, in this case? Let's figure it out in tests
+            // @TODO https://github.com/mezzio/mezzio-valinor/issues/2 for parsing BODY, QUERY and route parameters
             return $next([]);
         }
 
