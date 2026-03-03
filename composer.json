@@ -1,0 +1,13 @@
+{
+  "name": "mezzio/mezzio-valinor",
+  "extra": {
+    "laminas": {
+      "config-provider": "Mezzio\\Valinor\\ConfigProvider"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Mezzio\\Valinor\\": "."
+    }
+  }
+}
