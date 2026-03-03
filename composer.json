@@ -1,6 +1,6 @@
 {
   "name": "mezzio/mezzio-valinor",
-  "description": "Session container and middleware for PSR-7 applications",
+  "description": "Mezzio and Valinor integration layer: convert PSR-7 requests to well-typed data structures",
   "license": "BSD-3-Clause",
   "keywords": [
     "laminas",

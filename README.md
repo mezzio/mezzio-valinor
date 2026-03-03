@@ -1,6 +1,6 @@
-# mezzio-session
+# mezzio-valinor
 
-[![Build Status](https://github.com/mezzio/mezzio-session/workflows/Continuous%20Integration/badge.svg)](https://github.com/mezzio/mezzio-session/actions?query=workflow%3A"Continuous+Integration")
+[![Build Status](https://github.com/mezzio/mezzio-valinor/workflows/Continuous%20Integration/badge.svg)](https://github.com/mezzio/mezzio-valinor/actions?query=workflow%3A"Continuous+Integration")
 
 This library provides integration between [Mezzio](https://github.com/mezzio/mezzio) and [Valinor](https://github.com/CuyZ/Valinor),
 which is a powerful type-safe de-serializer.

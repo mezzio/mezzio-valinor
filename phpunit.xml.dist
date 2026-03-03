@@ -17,7 +17,7 @@
         </include>
     </source>
     <testsuites>
-        <testsuite name="mezzio-session">
+        <testsuite name="mezzio-valinor">
             <directory>./test</directory>
         </testsuite>
     </testsuites>

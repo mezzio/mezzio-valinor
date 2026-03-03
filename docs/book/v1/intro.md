@@ -73,7 +73,6 @@ final class AddProductToShoppingCart
 namespace My\NameSpace;
 
 use CuyZ\Valinor\Mapper\MappingError;
-use Mezzio\Session\RetrieveSession;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
