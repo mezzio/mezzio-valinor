@@ -85,4 +85,20 @@ final class DefaultMapperBuilderFactoryTest extends TestCase
         self::assertSame(5, $mapped->field1);
         self::assertSame('baz', $mapped->field2);
     }
+
+    public function test_mapper_flexibly_converts_input_parameters_by_default(): void
+    {
+        $request = $this->createStub(ServerRequestInterface::class);
+
+        $request->method('getParsedBody')
+            ->willReturn([
+                'field1' => '5',
+                'field2' => 'tab',
+            ]);
+
+        $mapped = $this->mapper->map(ExampleMappedObject::class, $request);
+
+        self::assertSame(5, $mapped->field1);
+        self::assertSame('tab', $mapped->field2);
+    }
 }
