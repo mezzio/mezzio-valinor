@@ -101,4 +101,21 @@ final class DefaultMapperBuilderFactoryTest extends TestCase
         self::assertSame(5, $mapped->field1);
         self::assertSame('tab', $mapped->field2);
     }
+
+    public function test_mapper_allows_superfulous_keys_by_default(): void
+    {
+        $request = $this->createStub(ServerRequestInterface::class);
+
+        $request->method('getParsedBody')
+            ->willReturn([
+                'field1' => '5',
+                'field2' => 'tab',
+                'field3' => 'taz',
+            ]);
+
+        $mapped = $this->mapper->map(ExampleMappedObject::class, $request);
+
+        self::assertSame(5, $mapped->field1);
+        self::assertSame('tab', $mapped->field2);
+    }
 }

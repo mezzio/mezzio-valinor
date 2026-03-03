@@ -29,7 +29,8 @@ final class DefaultMapperBuilderFactory
     {
         return new MapperBuilder()
             ->registerConverter(self::convertServerRequestToNext(...))
-            ->allowScalarValueCasting();
+            ->allowScalarValueCasting()
+            ->allowSuperfluousKeys();
     }
 
     /**
@@ -53,13 +54,28 @@ final class DefaultMapperBuilderFactory
 
         assert($routeResult === null || $routeResult instanceof RouteResult);
 
-        $routeParameters = $routeResult instanceof RouteResult
-            ? $routeResult->getMatchedParams()
-            : [];
-
         return $next(array_merge(
             $body,
-            $routeParameters,
+            $request->getQueryParams(),
+            $routeResult instanceof RouteResult
+                ? $routeResult->getMatchedParams()
+                : [],
         ));
     }
+
+//    /**
+//     * @template T
+//     * @param pure-callable(HttpRequest): T $next
+//     * @return T
+//     * @pure
+//     */
+//    private static function convertServerRequestToNext(ServerRequestInterface $request, callable $next): mixed
+//    {
+//        /** @psalm-suppress ImpureMethodCall inherently safe call on PSR-7 API */
+//        $routeResult = $request->getAttribute(RouteResult::class);
+//
+//        assert($routeResult instanceof RouteResult || $routeResult === null);
+//
+//        return $next(HttpRequest::fromPsr($request, $routeResult?->getMatchedParams() ?? []));
+//    }
 }
