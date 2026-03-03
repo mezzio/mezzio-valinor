@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Mezzio\Valinor;
 
+use CuyZ\Valinor\Mapper\Http\HttpRequest;
 use CuyZ\Valinor\MapperBuilder;
 use Mezzio\Router\RouteResult;
 use Psr\Http\Message\ServerRequestInterface;
 
-use function array_merge;
 use function assert;
-use function is_array;
 
 /**
  * @internal you shouldn't reference this class directly: either you rely on the {@see MapperBuilder} service provided
@@ -35,47 +34,18 @@ final class DefaultMapperBuilderFactory
 
     /**
      * @template T
-     * @param pure-callable(array): T $next
+     * @param pure-callable(HttpRequest): T $next
      * @return T
      * @pure
      */
     private static function convertServerRequestToNext(ServerRequestInterface $request, callable $next): mixed
     {
         /** @psalm-suppress ImpureMethodCall inherently safe call on PSR-7 API */
-        $body = $request->getParsedBody();
-
-        if (! is_array($body)) {
-            // @TODO https://github.com/mezzio/mezzio-valinor/issues/2 for parsing BODY, QUERY and route parameters
-            return $next([]);
-        }
-
-        /** @psalm-suppress ImpureMethodCall inherently safe call on PSR-7 API */
         $routeResult = $request->getAttribute(RouteResult::class);
 
-        assert($routeResult === null || $routeResult instanceof RouteResult);
+        assert($routeResult instanceof RouteResult || $routeResult === null);
 
-        return $next(array_merge(
-            $body,
-            $request->getQueryParams(),
-            $routeResult instanceof RouteResult
-                ? $routeResult->getMatchedParams()
-                : [],
-        ));
+        /** @psalm-suppress ImpureMethodCall ::fromPsr is a pure method */
+        return $next(HttpRequest::fromPsr($request, $routeResult?->getMatchedParams() ?? []));
     }
-
-//    /**
-//     * @template T
-//     * @param pure-callable(HttpRequest): T $next
-//     * @return T
-//     * @pure
-//     */
-//    private static function convertServerRequestToNext(ServerRequestInterface $request, callable $next): mixed
-//    {
-//        /** @psalm-suppress ImpureMethodCall inherently safe call on PSR-7 API */
-//        $routeResult = $request->getAttribute(RouteResult::class);
-//
-//        assert($routeResult instanceof RouteResult || $routeResult === null);
-//
-//        return $next(HttpRequest::fromPsr($request, $routeResult?->getMatchedParams() ?? []));
-//    }
 }

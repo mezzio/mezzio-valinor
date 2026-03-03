@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "acc35fb6a4d6d80ef2b06df225d5c3f2",
+    "content-hash": "c6eb81f08f70946cd4c988c2d025c88e",
     "packages": [
         {
             "name": "cuyz/valinor",
-            "version": "2.3.2",
+            "version": "dev-feat/http-request-mapping-with-attributes",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CuyZ/Valinor.git",
-                "reference": "3b9f3f54901371d589776502aab3da3a046801a7"
+                "reference": "e7b7b9335090a06c6cfc25635f62d75e559e953e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CuyZ/Valinor/zipball/3b9f3f54901371d589776502aab3da3a046801a7",
-                "reference": "3b9f3f54901371d589776502aab3da3a046801a7",
+                "url": "https://api.github.com/repos/CuyZ/Valinor/zipball/e7b7b9335090a06c6cfc25635f62d75e559e953e",
+                "reference": "e7b7b9335090a06c6cfc25635f62d75e559e953e",
                 "shasum": ""
             },
             "require": {
@@ -29,14 +29,15 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.91",
-                "infection/infection": "^0.31",
+                "infection/infection": "^0.32",
                 "marcocesarato/php-conventional-changelog": "^1.12",
                 "mikey179/vfsstream": "^1.6.10",
                 "phpbench/phpbench": "^1.3",
                 "phpstan/phpstan": "^2.0",
                 "phpstan/phpstan-phpunit": "^2.0",
                 "phpstan/phpstan-strict-rules": "^2.0",
-                "phpunit/phpunit": "^10.5",
+                "phpunit/phpunit": "^11.5",
+                "psr/http-message": "^2.0",
                 "rector/rector": "^2.0",
                 "vimeo/psalm": "^6.0"
             },
@@ -72,7 +73,7 @@
             ],
             "support": {
                 "issues": "https://github.com/CuyZ/Valinor/issues",
-                "source": "https://github.com/CuyZ/Valinor/tree/2.3.2"
+                "source": "https://github.com/CuyZ/Valinor/tree/feat/http-request-mapping-with-attributes"
             },
             "funding": [
                 {
@@ -80,7 +81,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-01-23T15:26:34+00:00"
+            "time": "2026-03-03T16:09:42+00:00"
         },
         {
             "name": "fig/http-message-util",
@@ -8175,9 +8176,18 @@
             "time": "2021-04-19T16:34:45+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "cuyz/valinor",
+            "version": "dev-feat/http-request-mapping-with-attributes",
+            "alias": "2.99.99",
+            "alias_normalized": "2.99.99.0"
+        }
+    ],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "cuyz/valinor": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
