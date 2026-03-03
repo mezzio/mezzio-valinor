@@ -5,6 +5,10 @@
             "name": "Infection"
         }
     ],
+    "extensions": [
+        "bcmath",
+        "pcov"
+    ],
     "additional_checks": [
         {
             "name": "Infection (PCOV)",
