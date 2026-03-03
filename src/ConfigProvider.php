@@ -14,19 +14,22 @@ use CuyZ\Valinor\MapperBuilder;
  */
 final class ConfigProvider
 {
+    /**
+     * @return array{
+     *     dependencies: array{
+     *         factories: array<class-string, class-string>
+     *     },
+     *     ...
+     * }
+     */
     public function __invoke(): array
     {
         return [
-            'dependencies' => $this->getDependencies(),
-        ];
-    }
-
-    public function getDependencies(): array
-    {
-        return [
-            'factories' => [
-                MapperBuilder::class => DefaultMapperBuilderFactory::class,
-                TreeMapper::class    => TreeMapperFactory::class,
+            'dependencies' => [
+                'factories' => [
+                    MapperBuilder::class => DefaultMapperBuilderFactory::class,
+                    TreeMapper::class    => TreeMapperFactory::class,
+                ],
             ],
         ];
     }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MezzioTest\Valinor;
 
+use CuyZ\Valinor\Mapper\TreeMapper;
+use Laminas\ServiceManager\ServiceManager;
 use Mezzio\Valinor\ConfigProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -11,11 +13,12 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(ConfigProvider::class)]
 final class ConfigProviderTest extends TestCase
 {
-    public function testInvocationReturnsArray(): void
+    public function testProvidesUsableServiceconfiguration(): void
     {
-        $config = new ConfigProvider()();
-
-        $this->assertArrayHasKey('dependencies', $config);
-        $this->assertIsArray($config['dependencies']);
+        self::assertInstanceOf(
+            TreeMapper::class,
+            new ServiceManager(new ConfigProvider()()['dependencies'])
+                ->get(TreeMapper::class),
+        );
     }
 }
