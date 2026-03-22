@@ -65,7 +65,6 @@ final class DefaultMapperBuilderFactoryTest extends TestCase
         $request->method('getParsedBody')
             ->willReturn([
                 'field1' => 5,
-                'field2' => 'bar',
             ]);
 
         $routingResult = RouteResult::fromRoute(
