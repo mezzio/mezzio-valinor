@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MezzioTest\Valinor;
 
+use CuyZ\Valinor\Mapper\Http\FromBody;
 use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\TreeMapper;
 use Mezzio\Router\Route;
@@ -162,5 +163,47 @@ final class DefaultMapperBuilderFactoryTest extends TestCase
                 $expected->getMessage(),
             );
         }
+    }
+
+    public function test_accepts_collisions_in_query_route_and_body_parameters_when_unmapped(): void
+    {
+        $request = $this->createMock(ServerRequestInterface::class);
+
+        $example = new readonly class () {
+            public function __construct(
+                #[FromBody]
+                public string $parameter1 = 'parameter1',
+            ) {
+            }
+        };
+
+        $request->method('getParsedBody')
+            ->willReturn([
+                'parameter1' => 'from-body',
+            ]);
+
+        $request->method('getQueryParams')
+            ->willReturn([
+                'parameter1' => 'from-query',
+            ]);
+
+        $routingResult = RouteResult::fromRoute(
+            new Route('a/route', $this->createStub(MiddlewareInterface::class)),
+            [
+                'parameter1' => 'from-route',
+            ]
+        );
+
+        $request->method('getAttribute')
+            ->willReturnMap([
+                [RouteResult::class, null, $routingResult],
+            ]);
+
+        self::assertSame(
+            'from-body',
+            $this->mapper
+                ->map($example::class, $request)
+                ->parameter1,
+        );
     }
 }
