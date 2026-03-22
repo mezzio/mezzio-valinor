@@ -1,13 +1,80 @@
 {
   "name": "mezzio/mezzio-valinor",
+  "description": "Mezzio and Valinor integration layer: convert PSR-7 requests to well-typed data structures",
+  "license": "BSD-3-Clause",
+  "keywords": [
+    "laminas",
+    "mezzio",
+    "valinor",
+    "serialization",
+    "validation",
+    "dto"
+  ],
+  "homepage": "https://mezzio.dev",
+  "support": {
+    "docs": "https://docs.mezzio.dev/mezzio-valinor/",
+    "issues": "https://github.com/mezzio/mezzio-valinor/issues",
+    "source": "https://github.com/mezzio/mezzio-valinor",
+    "rss": "https://github.com/mezzio/mezzio-valinor/releases.atom",
+    "chat": "https://laminas.dev/chat",
+    "forum": "https://discourse.laminas.dev"
+  },
+  "config": {
+    "sort-packages": true,
+    "platform": {
+      "php": "8.4.99"
+    },
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "infection/extension-installer": false,
+      "laminas/laminas-component-installer": true
+    }
+  },
   "extra": {
     "laminas": {
       "config-provider": "Mezzio\\Valinor\\ConfigProvider"
     }
   },
+  "require": {
+    "php": "~8.4.0 || ~8.5.0",
+    "cuyz/valinor": "^2.3.2",
+    "mezzio/mezzio-router": "^4.2.0",
+    "psr/container": "^1.0 || ^2.0",
+    "psr/http-server-middleware": "^1.0"
+  },
+  "require-dev": {
+    "laminas/laminas-coding-standard": "~3.1.0",
+    "laminas/laminas-diactoros": "^3.8.0",
+    "laminas/laminas-config-aggregator": "^1.19.0",
+    "laminas/laminas-component-installer": "^3.7.0",
+    "laminas/laminas-servicemanager": "^4.5.0",
+    "mezzio/mezzio": "^3.27.0",
+    "mezzio/mezzio-fastroute": "^3.14.0",
+    "mezzio/mezzio-helpers": "^5.20.0",
+    "phpunit/phpunit": "^11.5.42",
+    "roave/infection-static-analysis-plugin": "^1.43.0",
+    "psalm/plugin-phpunit": "^0.19.5",
+    "vimeo/psalm": "^6.15.1"
+  },
   "autoload": {
     "psr-4": {
-      "Mezzio\\Valinor\\": "."
+      "Mezzio\\Valinor\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "MezzioTest\\Valinor\\": "test/"
+    }
+  },
+  "scripts": {
+    "check": [
+      "@cs-check",
+      "@test"
+    ],
+    "cs-check": "phpcs",
+    "cs-fix": "phpcbf",
+    "static-analysis": "psalm --shepherd --stats",
+    "test": "phpunit --colors=always",
+    "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
   }
 }

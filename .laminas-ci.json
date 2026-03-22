@@ -1,0 +1,22 @@
+{
+    "backwardCompatibilityCheck": true,
+    "exclude": [
+        {
+            "name": "Infection"
+        }
+    ],
+    "extensions": [
+        "bcmath",
+        "pcov"
+    ],
+    "additional_checks": [
+        {
+            "name": "Infection (PCOV)",
+            "job": {
+                "php": "@lowest",
+                "dependencies": "locked",
+                "command": "./vendor/bin/roave-infection-static-analysis-plugin"
+            }
+        }
+    ]
+}
