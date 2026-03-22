@@ -1,1 +1,1 @@
-Copyright (c) 2026 Roave, LLC. (https://roave.com/)
+Copyright (c) 2026 Laminas Project a Series of LF Projects, LLC. (https://getlaminas.org/)
