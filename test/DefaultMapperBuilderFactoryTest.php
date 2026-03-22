@@ -159,7 +159,8 @@ final class DefaultMapperBuilderFactoryTest extends TestCase
             self::fail();
         } catch (MappingError $expected) {
             self::assertStringContainsString(
-                "Collision between keys `parameter1` and `parameter1`.",
+                "Key `parameter1` was found in several HTTP request sources. "
+                . "It must be sent in only one of route, query or body.",
                 $expected->getMessage(),
             );
         }

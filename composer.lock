@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/CuyZ/Valinor.git",
-                "reference": "72aa176d4a44778c19a8c94e01cc9b3886cebc64"
+                "reference": "d8df7d25bc9e6dee8fc323f5e100dbcaea865d34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CuyZ/Valinor/zipball/72aa176d4a44778c19a8c94e01cc9b3886cebc64",
-                "reference": "72aa176d4a44778c19a8c94e01cc9b3886cebc64",
+                "url": "https://api.github.com/repos/CuyZ/Valinor/zipball/d8df7d25bc9e6dee8fc323f5e100dbcaea865d34",
+                "reference": "d8df7d25bc9e6dee8fc323f5e100dbcaea865d34",
                 "shasum": ""
             },
             "require": {
@@ -81,7 +81,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-03-11T14:46:51+00:00"
+            "time": "2026-03-22T17:25:43+00:00"
         },
         {
             "name": "fig/http-message-util",
