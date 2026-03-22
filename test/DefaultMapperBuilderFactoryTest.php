@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MezzioTest\Valinor;
 
+use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\TreeMapper;
 use Mezzio\Router\Route;
 use Mezzio\Router\RouteResult;
@@ -116,5 +117,50 @@ final class DefaultMapperBuilderFactoryTest extends TestCase
 
         self::assertSame(5, $mapped->field1);
         self::assertSame('tab', $mapped->field2);
+    }
+
+    public function test_rejects_collisions_in_query_route_and_body_parameters_when_unmapped(): void
+    {
+        $request = $this->createMock(ServerRequestInterface::class);
+
+        $example = new readonly class () {
+            public function __construct(
+                public string $parameter1 = 'parameter1',
+            ) {
+            }
+        };
+
+        $request->method('getParsedBody')
+            ->willReturn([
+                'parameter1' => 'from-body',
+            ]);
+
+        $request->method('getQueryParams')
+            ->willReturn([
+                'parameter1' => 'from-query',
+            ]);
+
+        $routingResult = RouteResult::fromRoute(
+            new Route('a/route', $this->createStub(MiddlewareInterface::class)),
+            [
+                'parameter1' => 'from-route',
+            ]
+        );
+
+        $request->method('getAttribute')
+            ->willReturnMap([
+                [RouteResult::class, null, $routingResult],
+            ]);
+
+        try {
+            $this->mapper->map($example::class, $request);
+
+            self::fail();
+        } catch (MappingError $expected) {
+            self::assertStringContainsString(
+                "Collision between keys `parameter1` and `parameter1`.",
+                $expected->getMessage(),
+            );
+        }
     }
 }
