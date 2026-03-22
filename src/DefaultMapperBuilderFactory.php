@@ -45,7 +45,6 @@ final class DefaultMapperBuilderFactory
 
         assert($routeResult instanceof RouteResult || $routeResult === null);
 
-        /** @psalm-suppress ImpureMethodCall ::fromPsr is a pure method */
         return $next(HttpRequest::fromPsr($request, $routeResult?->getMatchedParams() ?? []));
     }
 }
