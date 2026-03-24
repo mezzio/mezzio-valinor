@@ -51,6 +51,9 @@ payloads:
 ```php
 namespace My\Namespace;
 
+use CuyZ\Valinor\Mapper\Http\FromBody;
+use CuyZ\Valinor\Mapper\Http\FromQuery;
+use CuyZ\Valinor\Mapper\Http\FromRoute;
 use My\ProductCustomization; // this is in your own domain
 
 final class AddProductToShoppingCart
@@ -61,9 +64,13 @@ final class AddProductToShoppingCart
      * @param list<ProductCustomization> $customization
      */
     public function __construct(
+        #[FromRoute]
         public readonly string $sku,
+        #[FromQuery]
         public readonly int $quantity,
         public readonly array $customization,
+        #[FromBody]
+        public readonly ?DeliveryInstructions $deliveryInstructions,
     ) {
     }
 }
@@ -99,3 +106,8 @@ final class AddProductToShoppingCartHandler implements RequestHandlerInterface {
     // ...
 }
 ```
+
+## Mapping
+
+For the exact details on what Valinor support, consult
+[its official documentation](https://valinor-php.dev/2.4/).
