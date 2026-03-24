@@ -5,8 +5,6 @@ nav:
     - v1:
         - Introduction: v1/intro.md
         - Installation: v1/installation.md
-        - Usage:
-            - "Mapping Requests": v1/mapping-requests.md
 site_name: mezzio-valinor
 site_description: 'Valinor request parsing middleware for PSR-7 applications.'
 repo_url: 'https://github.com/mezzio/mezzio-valinor'
