@@ -5,6 +5,7 @@ nav:
     - v1:
         - Introduction: v1/intro.md
         - Installation: v1/installation.md
+        - Basic Usage: v1/basic-usage.md
 site_name: mezzio-valinor
 site_description: 'Mezzio and Valinor integration layer: convert PSR-7 requests to well-typed data structures'
 repo_url: 'https://github.com/mezzio/mezzio-valinor'
