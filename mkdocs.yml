@@ -6,7 +6,7 @@ nav:
         - Introduction: v1/intro.md
         - Installation: v1/installation.md
 site_name: mezzio-valinor
-site_description: 'Valinor request parsing middleware for PSR-7 applications.'
+site_description: 'Mezzio and Valinor integration layer: convert PSR-7 requests to well-typed data structures'
 repo_url: 'https://github.com/mezzio/mezzio-valinor'
 extra:
     project: Mezzio
