@@ -37,7 +37,8 @@
   },
   "require": {
     "php": "~8.4.0 || ~8.5.0",
-    "cuyz/valinor": "^2.4.0",
+    "cuyz/valinor": "dev-feat/http-request-problem-details as 2.4.0",
+    "mezzio/mezzio-problem-details": "^1.0",
     "mezzio/mezzio-router": "^4.2.0",
     "psr/container": "^1.0 || ^2.0",
     "psr/http-message": "^2.0.0",
@@ -67,6 +68,12 @@
       "MezzioTest\\Valinor\\": "test/"
     }
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/romm/valinor"
+    }
+  ],
   "scripts": {
     "check": [
       "@cs-check",
