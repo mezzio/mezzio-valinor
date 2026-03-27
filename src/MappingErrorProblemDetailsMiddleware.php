@@ -10,6 +10,7 @@ use Fig\Http\Message\StatusCodeInterface;
 use Mezzio\Exception\RuntimeException;
 use Mezzio\ProblemDetails\Exception\CommonProblemDetailsExceptionTrait;
 use Mezzio\ProblemDetails\Exception\ProblemDetailsExceptionInterface;
+use Override;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -17,6 +18,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 final class MappingErrorProblemDetailsMiddleware implements MiddlewareInterface
 {
+    #[Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         try {
@@ -25,43 +27,20 @@ final class MappingErrorProblemDetailsMiddleware implements MiddlewareInterface
             throw new class ($error) extends RuntimeException implements ProblemDetailsExceptionInterface {
                 use CommonProblemDetailsExceptionTrait;
 
-                private HttpRequestProblemDetails $problemDetails;
-
                 public function __construct(MappingError $mappingError)
                 {
-                    $this->problemDetails = HttpRequestProblemDetails::fromMappingError($mappingError);
+                    $problemDetails   = HttpRequestProblemDetails::fromMappingError($mappingError);
+                    $this->title      = $problemDetails->title;
+                    $this->type       = $problemDetails->type;
+                    $this->status     = $problemDetails->status;
+                    $this->detail     = $problemDetails->detail;
+                    $this->additional = ['errors' => $problemDetails->errors];
 
                     parent::__construct(
                         'HTTP request is invalid',
                         StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+                        $mappingError,
                     );
-                }
-
-                public function getStatus(): int
-                {
-                    return $this->problemDetails->status;
-                }
-
-                public function getType(): string
-                {
-                    return $this->problemDetails->type;
-                }
-
-                public function getTitle(): string
-                {
-                    return $this->problemDetails->title;
-                }
-
-                public function getDetail(): string
-                {
-                    return $this->problemDetails->detail;
-                }
-
-                public function getAdditionalData(): array
-                {
-                    return [
-                        'errors' => $this->problemDetails->errors,
-                    ];
                 }
             };
         }
