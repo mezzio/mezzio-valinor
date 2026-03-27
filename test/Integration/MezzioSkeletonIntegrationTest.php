@@ -34,6 +34,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use function assert;
 use function fopen;
 use function is_resource;
+use function json_encode;
 
 #[CoversNothing]
 final class MezzioSkeletonIntegrationTest extends TestCase
@@ -279,10 +280,18 @@ final class MezzioSkeletonIntegrationTest extends TestCase
             ));
 
         self::assertSame(422, $response->getStatusCode());
-        self::assertSame(
-            '{"errors":{"intParameter":["Value \'some-string-that-is-not-an-int\' is not a valid integer."]},'
-            . '"title":"HTTP request is invalid","type":"https://www.rfc-editor.org/rfc/rfc9110#section-15.5.21",'
-            . '"status":422,"detail":"A total of 1 mapping error(s) were found."}',
+        self::assertJsonStringEqualsJsonString(
+            json_encode([
+                'errors' => [
+                    'intParameter' => [
+                        "Value 'some-string-that-is-not-an-int' is not a valid integer.",
+                    ],
+                ],
+                'title' => 'HTTP request is invalid',
+                'type' => 'https://www.rfc-editor.org/rfc/rfc9110#section-15.5.21',
+                'status' => 422,
+                'detail' => 'A total of 1 mapping error(s) were found.',
+            ]),
             $response->getBody()->__toString()
         );
     }
