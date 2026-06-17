@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e6006bf4eb97c67bd44fc23b34262b5f",
+    "content-hash": "f474d853cd967259096cc375f8666d6a",
     "packages": [
         {
             "name": "cuyz/valinor",
-            "version": "2.4.0",
+            "version": "dev-feat/http-request-problem-details",
             "source": {
                 "type": "git",
-                "url": "https://github.com/CuyZ/Valinor.git",
-                "reference": "3b0afa3a287ed7f3a69aab223726cf1139454c34"
+                "url": "https://github.com/romm/Valinor.git",
+                "reference": "e60b8eea83a75a68090806bb01e8e6cc3a6962b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CuyZ/Valinor/zipball/3b0afa3a287ed7f3a69aab223726cf1139454c34",
-                "reference": "3b0afa3a287ed7f3a69aab223726cf1139454c34",
+                "url": "https://api.github.com/repos/romm/Valinor/zipball/e60b8eea83a75a68090806bb01e8e6cc3a6962b1",
+                "reference": "e60b8eea83a75a68090806bb01e8e6cc3a6962b1",
                 "shasum": ""
             },
             "require": {
@@ -47,7 +47,55 @@
                     "CuyZ\\Valinor\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "CuyZ\\Valinor\\Tests\\": "tests",
+                    "CuyZ\\Valinor\\QA\\": "qa"
+                }
+            },
+            "scripts": {
+                "check": [
+                    "@putenv XDEBUG_MODE=off",
+                    "phpunit",
+                    "phpstan",
+                    "php-cs-fixer check --diff",
+                    "rector --dry-run",
+                    "psalm --config=tests/StaticAnalysis/psalm-without-plugin.xml",
+                    "psalm --config=tests/StaticAnalysis/psalm-with-plugin.xml",
+                    "phpstan --configuration=tests/StaticAnalysis/phpstan-without-extension.neon.dist",
+                    "phpstan --configuration=tests/StaticAnalysis/phpstan-with-extension.neon.dist",
+                    "@check-todo"
+                ],
+                "check-todo": [
+                    "! git --no-pager grep --extended-regexp --ignore-case 'todo|fixme' -- ':!composer.json' ':!*/quality-assurance.yml'"
+                ],
+                "fix": [
+                    "@putenv XDEBUG_MODE=off",
+                    "php-cs-fixer fix --diff",
+                    "rector"
+                ],
+                "test": [
+                    "@putenv XDEBUG_MODE=off",
+                    "phpunit"
+                ],
+                "mutation": [
+                    "infection --threads=max --git-diff-lines --min-msi=100 --with-timeouts --with-uncovered --show-mutations"
+                ],
+                "doc": [
+                    "Composer\\Config::disableProcessTimeout",
+                    "docker build -t valinor-doc ./docs",
+                    "docker run --name valinor-doc --rm -it -p 8000:8000 -v ${PWD}/docs:/docs valinor-doc"
+                ],
+                "benchmark-baseline": [
+                    "phpbench run --tag=original --retry-threshold=5 --iterations=10"
+                ],
+                "benchmark-compare": [
+                    "phpbench run --report=aggregate --ref=original --retry-threshold=5 --iterations=10 --assert='mode(variant.time.avg) <= mode(baseline.time.avg) +/- 10%'"
+                ],
+                "benchmark": [
+                    "phpbench run --report=aggregate --iterations=10"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -72,16 +120,15 @@
                 "yaml"
             ],
             "support": {
-                "issues": "https://github.com/CuyZ/Valinor/issues",
-                "source": "https://github.com/CuyZ/Valinor/tree/2.4.0"
+                "source": "https://github.com/romm/Valinor/tree/feat/http-request-problem-details"
             },
             "funding": [
                 {
-                    "url": "https://github.com/romm",
-                    "type": "github"
+                    "type": "github",
+                    "url": "https://github.com/romm"
                 }
             ],
-            "time": "2026-03-23T17:38:05+00:00"
+            "time": "2026-03-26T21:19:11+00:00"
         },
         {
             "name": "fig/http-message-util",
@@ -138,6 +185,85 @@
                 "source": "https://github.com/php-fig/http-message-util/tree/1.1.5"
             },
             "time": "2020-11-24T22:02:12+00:00"
+        },
+        {
+            "name": "mezzio/mezzio-problem-details",
+            "version": "1.19.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mezzio/mezzio-problem-details.git",
+                "reference": "93d0fa1877138f53f7b726a1370cb472cc65d32d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mezzio/mezzio-problem-details/zipball/93d0fa1877138f53f7b726a1370cb472cc65d32d",
+                "reference": "93d0fa1877138f53f7b726a1370cb472cc65d32d",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "fig/http-message-util": "^1.1.2",
+                "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+                "psr/container": "^1.0 || ^2.0",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.0 || ^2.0",
+                "psr/http-server-middleware": "^1.0",
+                "spatie/array-to-xml": "^3.3.0",
+                "webmozart/assert": "^1.10 || ^2.0",
+                "willdurand/negotiation": "^3.0"
+            },
+            "conflict": {
+                "zendframework/zend-problem-details": "*"
+            },
+            "require-dev": {
+                "laminas/laminas-coding-standard": "~3.1.0",
+                "laminas/laminas-diactoros": "^3.8",
+                "phpunit/phpunit": "^11.5.46",
+                "psalm/plugin-phpunit": "^0.19.5",
+                "rector/rector": "^2.2.14",
+                "vimeo/psalm": "^6.14.1"
+            },
+            "type": "library",
+            "extra": {
+                "laminas": {
+                    "config-provider": "Mezzio\\ProblemDetails\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mezzio\\ProblemDetails\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Problem Details for PSR-7 HTTP APIs addressing the RFC 7807 standard",
+            "homepage": "https://mezzio.dev",
+            "keywords": [
+                "api",
+                "laminas",
+                "mezzio",
+                "problem-details",
+                "rest",
+                "rfc 7807",
+                "rfc7807"
+            ],
+            "support": {
+                "chat": "https://laminas.dev/chat",
+                "docs": "https://docs.mezzio.dev/mezzio-problem-details/",
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/mezzio/mezzio-problem-details/issues",
+                "rss": "https://github.com/mezzio/mezzio-problem-details/releases.atom",
+                "source": "https://github.com/mezzio/mezzio-problem-details"
+            },
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "time": "2026-02-17T14:19:56+00:00"
         },
         {
             "name": "mezzio/mezzio-router",
@@ -495,6 +621,74 @@
             "time": "2023-04-11T06:14:47+00:00"
         },
         {
+            "name": "spatie/array-to-xml",
+            "version": "3.4.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/array-to-xml.git",
+                "reference": "88b2f3852a922dd73177a68938f8eb2ec70c7224"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/array-to-xml/zipball/88b2f3852a922dd73177a68938f8eb2ec70c7224",
+                "reference": "88b2f3852a922dd73177a68938f8eb2ec70c7224",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.2",
+                "pestphp/pest": "^1.21",
+                "spatie/pest-plugin-snapshots": "^1.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\ArrayToXml\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://freek.dev",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Convert an array to xml",
+            "homepage": "https://github.com/spatie/array-to-xml",
+            "keywords": [
+                "array",
+                "convert",
+                "xml"
+            ],
+            "support": {
+                "source": "https://github.com/spatie/array-to-xml/tree/3.4.4"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-12-15T09:00:41+00:00"
+        },
+        {
             "name": "webmozart/assert",
             "version": "2.1.6",
             "source": {
@@ -555,6 +749,62 @@
                 "source": "https://github.com/webmozarts/assert/tree/2.1.6"
             },
             "time": "2026-02-27T10:28:38+00:00"
+        },
+        {
+            "name": "willdurand/negotiation",
+            "version": "3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/willdurand/Negotiation.git",
+                "reference": "68e9ea0553ef6e2ee8db5c1d98829f111e623ec2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/willdurand/Negotiation/zipball/68e9ea0553ef6e2ee8db5c1d98829f111e623ec2",
+                "reference": "68e9ea0553ef6e2ee8db5c1d98829f111e623ec2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Negotiation\\": "src/Negotiation"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "William Durand",
+                    "email": "will+git@drnd.me"
+                }
+            ],
+            "description": "Content Negotiation tools for PHP provided as a standalone library.",
+            "homepage": "http://williamdurand.fr/Negotiation/",
+            "keywords": [
+                "accept",
+                "content",
+                "format",
+                "header",
+                "negotiation"
+            ],
+            "support": {
+                "issues": "https://github.com/willdurand/Negotiation/issues",
+                "source": "https://github.com/willdurand/Negotiation/tree/3.1.0"
+            },
+            "time": "2022-01-30T20:08:53+00:00"
         }
     ],
     "packages-dev": [
@@ -6520,74 +6770,6 @@
             "time": "2025-09-13T08:53:30+00:00"
         },
         {
-            "name": "spatie/array-to-xml",
-            "version": "3.4.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/array-to-xml.git",
-                "reference": "88b2f3852a922dd73177a68938f8eb2ec70c7224"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/array-to-xml/zipball/88b2f3852a922dd73177a68938f8eb2ec70c7224",
-                "reference": "88b2f3852a922dd73177a68938f8eb2ec70c7224",
-                "shasum": ""
-            },
-            "require": {
-                "ext-dom": "*",
-                "php": "^8.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.2",
-                "pestphp/pest": "^1.21",
-                "spatie/pest-plugin-snapshots": "^1.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "3.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Spatie\\ArrayToXml\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Freek Van der Herten",
-                    "email": "freek@spatie.be",
-                    "homepage": "https://freek.dev",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Convert an array to xml",
-            "homepage": "https://github.com/spatie/array-to-xml",
-            "keywords": [
-                "array",
-                "convert",
-                "xml"
-            ],
-            "support": {
-                "source": "https://github.com/spatie/array-to-xml/tree/3.4.4"
-            },
-            "funding": [
-                {
-                    "url": "https://spatie.be/open-source/support-us",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/spatie",
-                    "type": "github"
-                }
-            ],
-            "time": "2025-12-15T09:00:41+00:00"
-        },
-        {
             "name": "squizlabs/php_codesniffer",
             "version": "3.13.5",
             "source": {
@@ -7945,16 +8127,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "6.15.1",
+            "version": "6.16.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "28dc127af1b5aecd52314f6f645bafc10d0e11f9"
+                "reference": "f1f5de594dc76faf8784e02d3dc4716c91c6f6ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/28dc127af1b5aecd52314f6f645bafc10d0e11f9",
-                "reference": "28dc127af1b5aecd52314f6f645bafc10d0e11f9",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/f1f5de594dc76faf8784e02d3dc4716c91c6f6ac",
+                "reference": "f1f5de594dc76faf8784e02d3dc4716c91c6f6ac",
                 "shasum": ""
             },
             "require": {
@@ -8059,7 +8241,7 @@
                 "issues": "https://github.com/vimeo/psalm/issues",
                 "source": "https://github.com/vimeo/psalm"
             },
-            "time": "2026-02-07T19:27:16+00:00"
+            "time": "2026-03-19T10:56:09+00:00"
         },
         {
             "name": "webimpress/coding-standard",
@@ -8176,9 +8358,18 @@
             "time": "2021-04-19T16:34:45+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "cuyz/valinor",
+            "version": "dev-feat/http-request-problem-details",
+            "alias": "2.4.0",
+            "alias_normalized": "2.4.0.0"
+        }
+    ],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "cuyz/valinor": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

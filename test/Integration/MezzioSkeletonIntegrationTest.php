@@ -17,12 +17,14 @@ use Laminas\Stratigility\Middleware\ErrorHandler;
 use Mezzio\Application;
 use Mezzio\Handler\NotFoundHandler;
 use Mezzio\Helper\BodyParams\BodyParamsMiddleware;
+use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
 use Mezzio\Router\Middleware\DispatchMiddleware;
 use Mezzio\Router\Middleware\ImplicitHeadMiddleware;
 use Mezzio\Router\Middleware\ImplicitOptionsMiddleware;
 use Mezzio\Router\Middleware\MethodNotAllowedMiddleware;
 use Mezzio\Router\Middleware\RouteMiddleware;
 use Mezzio\Valinor\ConfigProvider;
+use Mezzio\Valinor\MappingErrorProblemDetailsMiddleware;
 use MezzioTest\Valinor\Integration\Asset\AddToCart;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
@@ -32,6 +34,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use function assert;
 use function fopen;
 use function is_resource;
+use function json_encode;
 
 #[CoversNothing]
 final class MezzioSkeletonIntegrationTest extends TestCase
@@ -248,6 +251,51 @@ final class MezzioSkeletonIntegrationTest extends TestCase
         self::assertInstanceOf(MappingError::class, $exception);
     }
 
+    public function test_mapping_error_problem_details_middleware_dispatch_problem_details_exception_properly(): void
+    {
+        [$app, $mapper] = $this->makeMezzio();
+
+        $example = new readonly class () {
+            public function __construct(
+                public int $intParameter = 42,
+            ) {
+            }
+        };
+
+        $app->post(
+            '/endpoint/{intParameter}',
+            static function (ServerRequestInterface $request) use ($example, $mapper): ResponseInterface {
+                $mapper->map($example::class, $request);
+
+                self::fail('The mapper should\'ve thrown an exception');
+            }
+        );
+
+        $response = $app
+            ->handle($this->makeRequest(
+                'POST',
+                'https://example.com/endpoint/some-string-that-is-not-an-int',
+                [],
+                '',
+            ));
+
+        self::assertSame(422, $response->getStatusCode());
+        self::assertJsonStringEqualsJsonString(
+            json_encode([
+                'errors' => [
+                    'intParameter' => [
+                        "Value 'some-string-that-is-not-an-int' is not a valid integer.",
+                    ],
+                ],
+                'title' => 'HTTP request is invalid',
+                'type' => 'https://www.rfc-editor.org/rfc/rfc9110#section-15.5.21',
+                'status' => 422,
+                'detail' => 'A total of 1 mapping error(s) were found.',
+            ]),
+            $response->getBody()->__toString()
+        );
+    }
+
     /** @param array<string, mixed> $queryParameters */
     private function makeRequest(
         string $method,
@@ -288,6 +336,7 @@ final class MezzioSkeletonIntegrationTest extends TestCase
             \Mezzio\ConfigProvider::class,
             \Mezzio\Router\ConfigProvider::class,
             \Laminas\Diactoros\ConfigProvider::class,
+            \Mezzio\ProblemDetails\ConfigProvider::class,
             ConfigProvider::class,
         ])->getMergedConfig();
 
@@ -298,6 +347,8 @@ final class MezzioSkeletonIntegrationTest extends TestCase
         $app       = $container->get(Application::class);
 
         $app->pipe(ErrorHandler::class);
+        $app->pipe(ProblemDetailsMiddleware::class);
+        $app->pipe(MappingErrorProblemDetailsMiddleware::class);
         $app->pipe(RouteMiddleware::class);
         $app->pipe(BodyParamsMiddleware::class);
         $app->pipe(ImplicitHeadMiddleware::class);

@@ -6,6 +6,7 @@ namespace Mezzio\Valinor;
 
 use CuyZ\Valinor\Mapper\TreeMapper;
 use CuyZ\Valinor\MapperBuilder;
+use Laminas\ServiceManager\Factory\InvokableFactory;
 
 /**
  * Provides auto-merged configuration to be used within Mezzio applications.
@@ -27,8 +28,9 @@ final class ConfigProvider
         return [
             'dependencies' => [
                 'factories' => [
-                    MapperBuilder::class => DefaultMapperBuilderFactory::class,
-                    TreeMapper::class    => TreeMapperFactory::class,
+                    MapperBuilder::class                        => DefaultMapperBuilderFactory::class,
+                    TreeMapper::class                           => TreeMapperFactory::class,
+                    MappingErrorProblemDetailsMiddleware::class => InvokableFactory::class,
                 ],
             ],
         ];
