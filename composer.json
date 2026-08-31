@@ -54,7 +54,7 @@
     "mezzio/mezzio-helpers": "^5.20.0",
     "phpunit/phpunit": "^11.5.42",
     "roave/infection-static-analysis-plugin": "^1.43.0",
-    "psalm/plugin-phpunit": "^0.19.5",
+    "psalm/plugin-phpunit": "^0.20.0",
     "vimeo/psalm": "^6.15.1"
   },
   "autoload": {
