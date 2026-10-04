@@ -44,17 +44,18 @@
     "psr/http-server-middleware": "^1.0"
   },
   "require-dev": {
+    "boundwize/structarmed": "^0.18.10",
     "laminas/laminas-coding-standard": "~3.1.0",
-    "laminas/laminas-diactoros": "^3.8.0",
-    "laminas/laminas-config-aggregator": "^1.19.0",
     "laminas/laminas-component-installer": "^3.7.0",
+    "laminas/laminas-config-aggregator": "^1.19.0",
+    "laminas/laminas-diactoros": "^3.8.0",
     "laminas/laminas-servicemanager": "^4.5.0",
     "mezzio/mezzio": "^3.27.0",
     "mezzio/mezzio-fastroute": "^3.14.0",
     "mezzio/mezzio-helpers": "^5.20.0",
     "phpunit/phpunit": "^11.5.42",
-    "roave/infection-static-analysis-plugin": "^1.43.0",
     "psalm/plugin-phpunit": "^0.19.5",
+    "roave/infection-static-analysis-plugin": "^1.43.0",
     "vimeo/psalm": "^6.15.1"
   },
   "autoload": {
