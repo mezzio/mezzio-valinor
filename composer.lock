@@ -1454,16 +1454,16 @@
         },
         {
             "name": "boundwize/structarmed",
-            "version": "0.18.10",
+            "version": "0.18.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/boundwize/structarmed.git",
-                "reference": "f2a94d3b58230e0356e8be7e23fe0037a39dee15"
+                "reference": "21d20e29234b4b106718639a12dc3dd343d2e05b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/f2a94d3b58230e0356e8be7e23fe0037a39dee15",
-                "reference": "f2a94d3b58230e0356e8be7e23fe0037a39dee15",
+                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/21d20e29234b4b106718639a12dc3dd343d2e05b",
+                "reference": "21d20e29234b4b106718639a12dc3dd343d2e05b",
                 "shasum": ""
             },
             "require": {
@@ -1520,7 +1520,7 @@
             ],
             "support": {
                 "issues": "https://github.com/boundwize/structarmed/issues",
-                "source": "https://github.com/boundwize/structarmed/tree/0.18.10"
+                "source": "https://github.com/boundwize/structarmed/tree/0.18.11"
             },
             "funding": [
                 {
@@ -1528,7 +1528,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-10-03T02:54:03+00:00"
+            "time": "2026-10-04T10:04:54+00:00"
         },
         {
             "name": "brick/varexporter",
@@ -4973,16 +4973,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "11.5.56",
+            "version": "11.5.57",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "5f83edffa6967c3db468d48a695ec7bcb02e9256"
+                "reference": "36b75bf56a8535623f5b3e24b27ea1823759da1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/5f83edffa6967c3db468d48a695ec7bcb02e9256",
-                "reference": "5f83edffa6967c3db468d48a695ec7bcb02e9256",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/36b75bf56a8535623f5b3e24b27ea1823759da1a",
+                "reference": "36b75bf56a8535623f5b3e24b27ea1823759da1a",
                 "shasum": ""
             },
             "require": {
@@ -4992,7 +4992,7 @@
                 "ext-libxml": "*",
                 "ext-mbstring": "*",
                 "ext-xmlwriter": "*",
-                "myclabs/deep-copy": "^1.13.4",
+                "myclabs/deep-copy": "^1.14.0",
                 "phar-io/manifest": "^2.0.4",
                 "phar-io/version": "^3.2.1",
                 "php": ">=8.2",
@@ -5055,7 +5055,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.56"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.57"
             },
             "funding": [
                 {
@@ -5063,7 +5063,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2026-07-06T14:52:39+00:00"
+            "time": "2026-10-05T05:47:54+00:00"
         },
         {
             "name": "psalm/plugin-phpunit",
