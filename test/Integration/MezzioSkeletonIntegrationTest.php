@@ -40,7 +40,7 @@ final class MezzioSkeletonIntegrationTest extends TestCase
     {
         [$app, $mapper] = $this->makeMezzio();
 
-        $app->post('/cart/{sku}', function (ServerRequestInterface $request) use ($mapper): ResponseInterface {
+        $app->post('/cart/{sku}', static function (ServerRequestInterface $request) use ($mapper): ResponseInterface {
             $input = $mapper->map(AddToCart::class, $request);
 
             return new JsonResponse([

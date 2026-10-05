@@ -6,6 +6,7 @@
 /phpcs.xml export-ignore
 /psalm.xml export-ignore
 /phpunit.xml.dist export-ignore
+/structarmed.php export-ignore
 /test/ export-ignore
 /.psr-container.php.stub
 /renovate.json
