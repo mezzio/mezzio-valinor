@@ -15,8 +15,11 @@
             "job": {
                 "php": "@lowest",
                 "dependencies": "locked",
-                "command": "./vendor/bin/roave-infection-static-analysis-plugin"
+                "command": ".\/vendor\/bin\/roave-infection-static-analysis-plugin"
             }
         }
-    ]
+    ],
+    "ignore_php_platform_requirements": {
+        "8.6": true
+    }
 }
